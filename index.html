@@ -9,30 +9,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@200;300;400;500&family=Amiri:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     :root {
-      --white: #fdfcfb;
-      --off-white: #f5f3f0;
-      --light-gray: #e8e4df;
-      --mid-gray: #b8b0a8;
-      --dark-gray: #6b6560;
-      --charcoal: #2c2825;
-      --accent: #c9b99a;
-      --accent-light: #e8ddd0;
-      --gold: #b8976a;
-      --gold-light: #d4b896;
+      --bg-deep:    #1a1a1e;
+      --bg-card:    #222228;
+      --bg-surface: #2a2a32;
+      --border:     rgba(184,151,106,0.18);
+      --border-soft:rgba(255,255,255,0.06);
+      --white:      #ffffff;
+      --white-85:   rgba(255,255,255,0.85);
+      --white-60:   rgba(255,255,255,0.60);
+      --white-35:   rgba(255,255,255,0.35);
+      --white-15:   rgba(255,255,255,0.12);
+      --gold:       #c9a96e;
+      --gold-light: #e2c9a0;
+      --gold-dim:   rgba(201,169,110,0.30);
+      --gold-glow:  rgba(201,169,110,0.08);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-
     html { scroll-behavior: smooth; }
 
     body {
       font-family: 'Jost', sans-serif;
-      background: var(--off-white);
-      color: var(--charcoal);
+      background: var(--bg-deep);
+      color: var(--white);
       overflow-x: hidden;
     }
 
-    /* ===== COVER PAGE ===== */
+    /* ===================== COVER ===================== */
     #cover {
       min-height: 100vh;
       display: flex;
@@ -41,126 +44,145 @@
       justify-content: center;
       position: relative;
       overflow: hidden;
-      background: var(--white);
+      background: var(--bg-deep);
+    }
+
+    .cover-noise {
+      position: absolute;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      opacity: 0.5;
+      pointer-events: none;
     }
 
     .cover-bg {
       position: absolute;
       inset: 0;
       background:
-        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(201,185,154,0.18) 0%, transparent 70%),
-        radial-gradient(ellipse 80% 60% at 50% 100%, rgba(184,151,106,0.10) 0%, transparent 70%);
+        radial-gradient(ellipse 70% 50% at 50% 0%,   rgba(201,169,110,0.09) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 55% at 50% 100%, rgba(201,169,110,0.06) 0%, transparent 65%),
+        radial-gradient(ellipse 50% 40% at 20% 50%,  rgba(255,255,255,0.02) 0%, transparent 60%);
     }
 
-    /* Decorative corner ornaments */
+    /* Corner ornaments */
     .corner {
       position: absolute;
-      width: 180px;
-      height: 180px;
-      opacity: 0.25;
+      width: 160px;
+      height: 160px;
+      opacity: 0.35;
     }
-    .corner-tl { top: 20px; left: 20px; transform-origin: top left; }
-    .corner-tr { top: 20px; right: 20px; transform: scaleX(-1); transform-origin: top right; }
-    .corner-bl { bottom: 20px; left: 20px; transform: scaleY(-1); transform-origin: bottom left; }
-    .corner-br { bottom: 20px; right: 20px; transform: scale(-1,-1); transform-origin: bottom right; }
+    .corner-tl { top: 24px; left: 24px; }
+    .corner-tr { top: 24px; right: 24px; transform: scaleX(-1); }
+    .corner-bl { bottom: 24px; left: 24px; transform: scaleY(-1); }
+    .corner-br { bottom: 24px; right: 24px; transform: scale(-1,-1); }
+
+    /* Thin outer frame */
+    .cover-frame {
+      position: absolute;
+      inset: 18px;
+      border: 1px solid var(--border);
+      pointer-events: none;
+    }
+    .cover-frame::before {
+      content: '';
+      position: absolute;
+      inset: 8px;
+      border: 1px solid rgba(201,169,110,0.08);
+    }
 
     .cover-inner {
       position: relative;
       z-index: 2;
       text-align: center;
-      padding: 40px 30px;
+      padding: 48px 32px;
       animation: fadeUp 1.2s ease both;
     }
 
     .cover-label {
       font-family: 'Jost', sans-serif;
       font-weight: 200;
-      font-size: 0.72rem;
-      letter-spacing: 0.45em;
+      font-size: 0.66rem;
+      letter-spacing: 0.55em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
+
+    .ring-svg { margin-bottom: 22px; opacity: 0.6; }
 
     .cover-title {
       font-family: 'Cormorant Garamond', serif;
       font-weight: 300;
-      font-size: clamp(3.2rem, 9vw, 6rem);
-      line-height: 1.05;
-      color: var(--charcoal);
+      font-size: clamp(3.4rem, 10vw, 6.5rem);
+      line-height: 1.0;
+      color: var(--white);
       letter-spacing: -0.01em;
     }
-
     .cover-title span {
       display: block;
       font-style: italic;
-      color: var(--gold);
+      color: var(--gold-light);
     }
 
-    .cover-ampersand {
+    .cover-amp {
       font-family: 'Cormorant Garamond', serif;
       font-size: clamp(2rem, 5vw, 3rem);
-      color: var(--mid-gray);
+      color: var(--white-35);
       font-style: italic;
       font-weight: 300;
       display: block;
-      margin: 8px 0;
+      margin: 6px 0;
     }
 
     .divider-line {
-      width: 80px;
+      width: 70px;
       height: 1px;
       background: linear-gradient(to right, transparent, var(--gold), transparent);
-      margin: 28px auto;
+      margin: 26px auto;
     }
 
-    .divider-floral {
+    .floral-row {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 10px;
-      margin: 20px auto;
+      margin: 18px auto;
     }
-    .divider-floral::before,
-    .divider-floral::after {
+    .floral-row::before, .floral-row::after {
       content: '';
-      width: 50px;
+      width: 44px;
       height: 1px;
-      background: linear-gradient(to right, transparent, var(--gold-light));
     }
-    .divider-floral::after {
-      background: linear-gradient(to left, transparent, var(--gold-light));
-    }
-    .floral-icon {
-      color: var(--gold);
-      font-size: 1.1rem;
-    }
+    .floral-row::before { background: linear-gradient(to right, transparent, var(--gold-dim)); }
+    .floral-row::after  { background: linear-gradient(to left,  transparent, var(--gold-dim)); }
+    .floral-icon { color: var(--gold); font-size: 0.95rem; }
 
     .cover-to {
       font-family: 'Jost', sans-serif;
       font-weight: 200;
-      font-size: 0.75rem;
-      letter-spacing: 0.3em;
+      font-size: 0.68rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
-      color: var(--dark-gray);
+      color: var(--white-35);
       margin-top: 28px;
-      margin-bottom: 6px;
+      margin-bottom: 5px;
     }
 
     .cover-guest-label {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.85rem;
-      color: var(--mid-gray);
-      margin-bottom: 6px;
+      font-size: 0.78rem;
+      color: var(--white-35);
+      margin-bottom: 8px;
     }
 
     .cover-guest-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.4rem, 4vw, 1.9rem);
+      font-size: clamp(1.5rem, 4.5vw, 2.1rem);
       font-weight: 500;
-      color: var(--charcoal);
-      margin-bottom: 40px;
+      color: var(--white-85);
+      margin-bottom: 44px;
+      letter-spacing: 0.02em;
     }
 
     .btn-open {
@@ -172,10 +194,10 @@
       color: var(--gold);
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.75rem;
-      letter-spacing: 0.4em;
+      font-size: 0.7rem;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      padding: 14px 36px;
+      padding: 15px 38px;
       cursor: pointer;
       transition: all 0.4s ease;
       text-decoration: none;
@@ -193,124 +215,99 @@
       z-index: 0;
     }
     .btn-open:hover::before { transform: scaleX(1); }
-    .btn-open:hover { color: var(--white); }
-    .btn-open span { position: relative; z-index: 1; }
+    .btn-open:hover { color: var(--bg-deep); }
+    .btn-open > * { position: relative; z-index: 1; }
 
-    .envelope-icon {
-      position: relative;
-      z-index: 1;
-      font-size: 0.9rem;
-    }
-
-    /* ===== MAIN INVITATION ===== */
-    #invitation {
-      display: none;
-      min-height: 100vh;
-      background: var(--white);
-      position: relative;
-      overflow: hidden;
-    }
+    /* ===================== INVITATION ===================== */
+    #invitation { display: none; min-height: 100vh; background: var(--bg-deep); position: relative; overflow: hidden; }
     #invitation.active { display: block; }
 
-    .inv-bg-pattern {
+    .inv-noise {
       position: fixed;
       inset: 0;
-      background-image:
-        radial-gradient(circle at 15% 15%, rgba(201,185,154,0.08) 0%, transparent 50%),
-        radial-gradient(circle at 85% 85%, rgba(184,151,106,0.06) 0%, transparent 50%);
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Particle canvas */
-    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.5; }
+    .inv-bg-glow {
+      position: fixed;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 35% at 50% 0%,   rgba(201,169,110,0.07) 0%, transparent 60%),
+        radial-gradient(ellipse 60% 40% at 50% 100%, rgba(201,169,110,0.05) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    #particles { position: fixed; inset: 0; pointer-events: none; z-index: 0; opacity: 0.6; }
 
     .inv-content {
       position: relative;
       z-index: 1;
       max-width: 680px;
       margin: 0 auto;
-      padding: 60px 30px 80px;
+      padding: 60px 28px 80px;
     }
 
-    /* Section top bar */
-    .section-bar {
-      width: 40px;
-      height: 2px;
-      background: var(--gold);
-      margin: 0 auto 30px;
-    }
-
-    /* ===== BISMILLAH ===== */
-    .bismillah-section {
-      text-align: center;
-      padding: 60px 20px 50px;
-      animation: fadeUp 1s 0.2s both;
-    }
+    /* Bismillah */
+    .bismillah-section { text-align: center; padding: 60px 20px 50px; }
 
     .bismillah-arabic {
       font-family: 'Amiri', serif;
-      font-size: clamp(1.8rem, 6vw, 2.8rem);
-      color: var(--charcoal);
+      font-size: clamp(1.9rem, 6vw, 3rem);
+      color: var(--white-85);
       line-height: 1.6;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       direction: rtl;
     }
 
     .bismillah-sub {
       font-family: 'Jost', sans-serif;
       font-weight: 200;
-      font-size: 0.7rem;
-      letter-spacing: 0.35em;
+      font-size: 0.65rem;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--mid-gray);
+      color: var(--white-35);
     }
 
-    /* ===== INTRO TEXT ===== */
-    .intro-section {
-      text-align: center;
-      padding: 0 20px 50px;
-      animation: fadeUp 1s 0.4s both;
-    }
+    /* Intro */
+    .intro-section { text-align: center; padding: 0 20px 50px; }
 
     .intro-text {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.9rem;
-      line-height: 1.9;
-      color: var(--dark-gray);
+      font-size: 0.88rem;
+      line-height: 2.0;
+      color: var(--white-60);
       max-width: 480px;
-      margin: 0 auto 36px;
+      margin: 0 auto 10px;
     }
 
-    /* ===== COUPLE NAMES ===== */
-    .couple-section {
-      text-align: center;
-      padding: 20px 20px 50px;
-      animation: fadeUp 1s 0.5s both;
-    }
+    /* Couple */
+    .couple-section { text-align: center; padding: 20px 20px 50px; }
 
     .groom-name, .bride-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.4rem, 7vw, 3.8rem);
+      font-size: clamp(2.6rem, 7.5vw, 4rem);
       font-weight: 400;
       font-style: italic;
-      color: var(--charcoal);
+      color: var(--white);
       line-height: 1.1;
     }
 
     .parent-info {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.78rem;
-      color: var(--mid-gray);
+      font-size: 0.76rem;
+      color: var(--white-35);
       letter-spacing: 0.05em;
       margin-top: 8px;
     }
 
     .couple-amp {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(3rem, 8vw, 5rem);
+      font-size: clamp(3.2rem, 9vw, 5.5rem);
       font-weight: 300;
       font-style: italic;
       color: var(--gold);
@@ -318,76 +315,122 @@
       margin: 10px 0;
     }
 
-    /* ===== DATE ===== */
-    .date-section {
-      text-align: center;
-      padding: 20px 20px 50px;
-      animation: fadeUp 1s 0.6s both;
+    /* Date */
+    .date-section { text-align: center; padding: 20px 20px 50px; }
+
+    .section-title {
+      font-family: 'Jost', sans-serif;
+      font-weight: 200;
+      font-size: 0.63rem;
+      letter-spacing: 0.55em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 22px;
     }
 
     .date-badge {
       display: inline-block;
-      border: 1px solid var(--light-gray);
-      padding: 28px 50px;
+      border: 1px solid var(--border);
+      padding: 30px 55px;
       position: relative;
+      background: var(--bg-card);
     }
     .date-badge::before, .date-badge::after {
       content: '';
       position: absolute;
-      width: 12px;
-      height: 12px;
+      width: 13px; height: 13px;
       border-color: var(--gold);
       border-style: solid;
     }
-    .date-badge::before {
-      top: -1px; left: -1px;
-      border-width: 2px 0 0 2px;
-    }
-    .date-badge::after {
-      bottom: -1px; right: -1px;
-      border-width: 0 2px 2px 0;
-    }
+    .date-badge::before { top: -1px; left: -1px; border-width: 2px 0 0 2px; }
+    .date-badge::after  { bottom: -1px; right: -1px; border-width: 0 2px 2px 0; }
 
     .date-day {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       font-weight: 300;
-      letter-spacing: 0.4em;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      color: var(--mid-gray);
+      color: var(--white-35);
       margin-bottom: 4px;
     }
 
     .date-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 8vw, 4.5rem);
+      font-size: clamp(3rem, 9vw, 5rem);
       font-weight: 300;
-      color: var(--charcoal);
+      color: var(--white);
       line-height: 1;
     }
 
     .date-month-year {
       font-family: 'Jost', sans-serif;
       font-weight: 200;
-      font-size: 0.8rem;
-      letter-spacing: 0.35em;
+      font-size: 0.76rem;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
-      color: var(--dark-gray);
+      color: var(--white-60);
       margin-top: 6px;
     }
 
-    /* ===== QUOTE ===== */
-    .quote-section {
-      text-align: center;
-      padding: 0 24px 50px;
-      animation: fadeUp 1s 0.7s both;
+    /* Countdown */
+    .countdown-section { text-align: center; padding: 10px 20px 60px; }
+
+    .countdown-label {
+      font-family: 'Jost', sans-serif;
+      font-weight: 200;
+      font-size: 0.63rem;
+      letter-spacing: 0.48em;
+      text-transform: uppercase;
+      color: var(--white-35);
+      margin-bottom: 28px;
     }
+
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .cd-item {
+      min-width: 74px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-soft);
+      padding: 20px 14px 28px;
+      position: relative;
+    }
+    .cd-item::after {
+      content: attr(data-label);
+      position: absolute;
+      bottom: 9px;
+      left: 0; right: 0;
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.54rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--white-35);
+      text-align: center;
+    }
+
+    .cd-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 6vw, 2.9rem);
+      font-weight: 300;
+      color: var(--white-85);
+      line-height: 1;
+      display: block;
+    }
+
+    /* Quote */
+    .quote-section { text-align: center; padding: 0 24px 50px; }
 
     .quote-mark {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 5rem;
+      font-size: 5.5rem;
       font-weight: 300;
-      color: var(--accent-light);
+      color: var(--white-15);
       line-height: 0.5;
       display: block;
       margin-bottom: 10px;
@@ -395,11 +438,11 @@
 
     .quote-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1rem, 3.5vw, 1.3rem);
+      font-size: clamp(1rem, 3.5vw, 1.28rem);
       font-weight: 400;
       font-style: italic;
-      color: var(--dark-gray);
-      line-height: 1.8;
+      color: var(--white-60);
+      line-height: 1.85;
       max-width: 520px;
       margin: 0 auto 14px;
     }
@@ -407,120 +450,58 @@
     .quote-source {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.72rem;
-      letter-spacing: 0.2em;
+      font-size: 0.68rem;
+      letter-spacing: 0.22em;
       color: var(--gold);
     }
 
-    /* ===== COUNTDOWN ===== */
-    .countdown-section {
-      text-align: center;
-      padding: 10px 20px 60px;
-      animation: fadeUp 1s 0.8s both;
-    }
-
-    .countdown-label {
-      font-family: 'Jost', sans-serif;
-      font-weight: 200;
-      font-size: 0.68rem;
-      letter-spacing: 0.45em;
-      text-transform: uppercase;
-      color: var(--mid-gray);
-      margin-bottom: 28px;
-    }
-
-    .countdown-grid {
-      display: flex;
-      justify-content: center;
-      gap: 16px;
-      flex-wrap: wrap;
-    }
-
-    .cd-item {
-      min-width: 70px;
-      background: var(--off-white);
-      border: 1px solid var(--light-gray);
-      padding: 18px 14px 12px;
-      position: relative;
-    }
-    .cd-item::after {
-      content: attr(data-label);
-      position: absolute;
-      bottom: 8px;
-      left: 0; right: 0;
-      font-family: 'Jost', sans-serif;
-      font-weight: 300;
-      font-size: 0.58rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--mid-gray);
-      text-align: center;
-    }
-
-    .cd-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 6vw, 2.8rem);
-      font-weight: 300;
-      color: var(--charcoal);
-      line-height: 1;
-      display: block;
-      margin-bottom: 22px;
-    }
-
-    /* ===== LOCATION ===== */
-    .location-section {
-      text-align: center;
-      padding: 0 20px 60px;
-      animation: fadeUp 1s 0.9s both;
-    }
-
-    .section-title {
-      font-family: 'Jost', sans-serif;
-      font-weight: 200;
-      font-size: 0.68rem;
-      letter-spacing: 0.5em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 20px;
-    }
+    /* Location */
+    .location-section { text-align: center; padding: 0 20px 60px; }
 
     .location-card {
-      border: 1px solid var(--light-gray);
-      padding: 36px 30px;
+      border: 1px solid var(--border);
+      padding: 38px 32px;
       max-width: 420px;
       margin: 0 auto;
       position: relative;
-      background: var(--white);
+      background: var(--bg-card);
     }
     .location-card::before {
       content: '';
       position: absolute;
-      top: 8px; left: 8px; right: 8px; bottom: 8px;
-      border: 1px solid var(--accent-light);
+      top: 9px; left: 9px; right: 9px; bottom: 9px;
+      border: 1px solid rgba(201,169,110,0.08);
       pointer-events: none;
     }
 
     .location-icon {
-      font-size: 1.5rem;
-      color: var(--gold);
+      font-size: 1.6rem;
       margin-bottom: 16px;
       display: block;
     }
 
     .location-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.3rem;
+      font-size: 1.35rem;
       font-weight: 500;
-      color: var(--charcoal);
+      color: var(--white-85);
       margin-bottom: 10px;
     }
 
     .location-address {
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.82rem;
-      color: var(--dark-gray);
-      line-height: 1.7;
+      font-size: 0.80rem;
+      color: var(--white-60);
+      line-height: 1.75;
+      margin-bottom: 10px;
+    }
+
+    .location-date-sub {
+      font-family: 'Jost', sans-serif;
+      font-weight: 300;
+      font-size: 0.74rem;
+      color: var(--white-35);
       margin-bottom: 22px;
     }
 
@@ -528,76 +509,52 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      background: var(--charcoal);
-      color: var(--white);
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      color: var(--gold);
       font-family: 'Jost', sans-serif;
       font-weight: 300;
-      font-size: 0.7rem;
-      letter-spacing: 0.3em;
+      font-size: 0.68rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       padding: 12px 28px;
       text-decoration: none;
       transition: all 0.3s ease;
     }
-    .btn-maps:hover {
-      background: var(--gold);
-    }
+    .btn-maps:hover { background: var(--gold); color: var(--bg-deep); }
 
-    /* ===== CLOSING ===== */
-    .closing-section {
-      text-align: center;
-      padding: 0 24px 60px;
-      animation: fadeUp 1s 1s both;
-    }
+    /* Closing */
+    .closing-section { text-align: center; padding: 0 24px 60px; }
 
     .closing-text {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.1rem, 3.5vw, 1.4rem);
+      font-size: clamp(1.05rem, 3.5vw, 1.35rem);
       font-weight: 400;
       font-style: italic;
-      color: var(--dark-gray);
-      line-height: 1.8;
+      color: var(--white-60);
+      line-height: 1.85;
       max-width: 480px;
       margin: 0 auto 36px;
     }
 
     .closing-names {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-size: clamp(1.9rem, 5.5vw, 2.7rem);
       font-weight: 400;
       font-style: italic;
-      color: var(--charcoal);
+      color: var(--white-85);
       margin-bottom: 8px;
     }
 
     .closing-hashtag {
       font-family: 'Jost', sans-serif;
       font-weight: 200;
-      font-size: 0.78rem;
-      letter-spacing: 0.25em;
+      font-size: 0.74rem;
+      letter-spacing: 0.28em;
       color: var(--gold);
     }
 
-    /* ===== FOOTER ===== */
-    .footer {
-      text-align: center;
-      padding: 24px;
-      border-top: 1px solid var(--light-gray);
-      background: var(--white);
-    }
-    .footer p {
-      font-family: 'Jost', sans-serif;
-      font-weight: 200;
-      font-size: 0.65rem;
-      letter-spacing: 0.3em;
-      color: var(--mid-gray);
-      text-transform: uppercase;
-    }
-    .footer span {
-      color: var(--gold);
-    }
-
-    /* ===== SEPARATOR ===== */
+    /* Separator */
     .sep {
       display: flex;
       align-items: center;
@@ -609,7 +566,7 @@
       content: '';
       flex: 1;
       height: 1px;
-      background: var(--light-gray);
+      background: var(--border-soft);
     }
     .sep-diamond {
       width: 6px; height: 6px;
@@ -618,49 +575,40 @@
       flex-shrink: 0;
     }
 
-    /* ===== FLOATING PETALS ===== */
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border-soft);
+    }
+    .footer p {
+      font-family: 'Jost', sans-serif;
+      font-weight: 200;
+      font-size: 0.62rem;
+      letter-spacing: 0.32em;
+      color: var(--white-35);
+      text-transform: uppercase;
+    }
+    .footer span { color: var(--gold); }
+
+    /* Petals */
     .petal {
       position: fixed;
       pointer-events: none;
       z-index: 0;
       opacity: 0;
-      font-size: 0.8rem;
       animation: petalFall linear infinite;
     }
 
-    /* ===== ANIMATIONS ===== */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    @keyframes petalFall {
-      0% { opacity: 0; transform: translateY(-20px) rotate(0deg); }
-      10% { opacity: 0.6; }
-      90% { opacity: 0.3; }
-      100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
-    }
-
-    /* ===== SCROLL REVEAL ===== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(28px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ===== MUSIC TOGGLE ===== */
+    /* Music toggle */
     .music-toggle {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      width: 44px;
-      height: 44px;
-      background: var(--white);
-      border: 1px solid var(--light-gray);
+      width: 46px;
+      height: 46px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
       border-radius: 50%;
       display: none;
       align-items: center;
@@ -669,18 +617,39 @@
       z-index: 999;
       font-size: 1rem;
       color: var(--gold);
-      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
       transition: all 0.3s ease;
     }
-    .music-toggle:hover { background: var(--gold); color: var(--white); }
+    .music-toggle:hover { background: var(--gold); color: var(--bg-deep); }
     .music-toggle.show { display: flex; }
 
-    /* ===== RESPONSIVE ===== */
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes petalFall {
+      0%   { opacity: 0; transform: translateY(-20px) rotate(0deg); }
+      10%  { opacity: 0.5; }
+      90%  { opacity: 0.2; }
+      100% { opacity: 0; transform: translateY(100vh) rotate(360deg); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.9s ease, transform 0.9s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* Responsive */
     @media (max-width: 480px) {
       .corner { width: 100px; height: 100px; }
       .date-badge { padding: 22px 32px; }
-      .cd-item { min-width: 58px; }
+      .cd-item { min-width: 60px; }
       .location-card { padding: 28px 20px; }
+      .cover-frame { inset: 12px; }
     }
   </style>
 </head>
@@ -688,80 +657,66 @@
 
 <!-- ========== COVER PAGE ========== -->
 <section id="cover">
+  <div class="cover-noise"></div>
   <div class="cover-bg"></div>
+  <div class="cover-frame"></div>
 
-  <!-- Corner ornaments SVG -->
-  <svg class="corner corner-tl" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 170 L10 10 L170 10" stroke="#b8976a" stroke-width="1.5" fill="none"/>
-    <path d="M30 150 L30 30 L150 30" stroke="#b8976a" stroke-width="0.8" fill="none" stroke-dasharray="4 6"/>
-    <circle cx="10" cy="10" r="3" fill="#b8976a"/>
-    <path d="M50 10 Q90 10 90 50" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M10 50 Q10 90 50 90" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <!-- Floral motif -->
-    <circle cx="90" cy="10" r="2" fill="#b8976a" opacity="0.5"/>
-    <circle cx="10" cy="90" r="2" fill="#b8976a" opacity="0.5"/>
-    <path d="M70 10 C70 40 40 70 10 70" stroke="#b8976a" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <!-- Corner ornaments -->
+  <svg class="corner corner-tl" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 152 L8 8 L152 8" stroke="#c9a96e" stroke-width="1.2" fill="none"/>
+    <path d="M22 136 L22 22 L136 22" stroke="#c9a96e" stroke-width="0.6" fill="none" stroke-dasharray="3 6"/>
+    <circle cx="8" cy="8" r="2.5" fill="#c9a96e"/>
+    <path d="M44 8 Q80 8 80 44" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M8 44 Q8 80 44 80" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
   </svg>
-  <svg class="corner corner-tr" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 170 L10 10 L170 10" stroke="#b8976a" stroke-width="1.5" fill="none"/>
-    <path d="M30 150 L30 30 L150 30" stroke="#b8976a" stroke-width="0.8" fill="none" stroke-dasharray="4 6"/>
-    <circle cx="10" cy="10" r="3" fill="#b8976a"/>
-    <path d="M50 10 Q90 10 90 50" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M10 50 Q10 90 50 90" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <circle cx="90" cy="10" r="2" fill="#b8976a" opacity="0.5"/>
-    <circle cx="10" cy="90" r="2" fill="#b8976a" opacity="0.5"/>
-    <path d="M70 10 C70 40 40 70 10 70" stroke="#b8976a" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <svg class="corner corner-tr" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 152 L8 8 L152 8" stroke="#c9a96e" stroke-width="1.2" fill="none"/>
+    <path d="M22 136 L22 22 L136 22" stroke="#c9a96e" stroke-width="0.6" fill="none" stroke-dasharray="3 6"/>
+    <circle cx="8" cy="8" r="2.5" fill="#c9a96e"/>
+    <path d="M44 8 Q80 8 80 44" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M8 44 Q8 80 44 80" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
   </svg>
-  <svg class="corner corner-bl" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 170 L10 10 L170 10" stroke="#b8976a" stroke-width="1.5" fill="none"/>
-    <path d="M30 150 L30 30 L150 30" stroke="#b8976a" stroke-width="0.8" fill="none" stroke-dasharray="4 6"/>
-    <circle cx="10" cy="10" r="3" fill="#b8976a"/>
-    <path d="M50 10 Q90 10 90 50" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M10 50 Q10 90 50 90" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <circle cx="90" cy="10" r="2" fill="#b8976a" opacity="0.5"/>
-    <circle cx="10" cy="90" r="2" fill="#b8976a" opacity="0.5"/>
-    <path d="M70 10 C70 40 40 70 10 70" stroke="#b8976a" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <svg class="corner corner-bl" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 152 L8 8 L152 8" stroke="#c9a96e" stroke-width="1.2" fill="none"/>
+    <path d="M22 136 L22 22 L136 22" stroke="#c9a96e" stroke-width="0.6" fill="none" stroke-dasharray="3 6"/>
+    <circle cx="8" cy="8" r="2.5" fill="#c9a96e"/>
+    <path d="M44 8 Q80 8 80 44" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M8 44 Q8 80 44 80" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
   </svg>
-  <svg class="corner corner-br" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M10 170 L10 10 L170 10" stroke="#b8976a" stroke-width="1.5" fill="none"/>
-    <path d="M30 150 L30 30 L150 30" stroke="#b8976a" stroke-width="0.8" fill="none" stroke-dasharray="4 6"/>
-    <circle cx="10" cy="10" r="3" fill="#b8976a"/>
-    <path d="M50 10 Q90 10 90 50" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <path d="M10 50 Q10 90 50 90" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.6"/>
-    <circle cx="90" cy="10" r="2" fill="#b8976a" opacity="0.5"/>
-    <circle cx="10" cy="90" r="2" fill="#b8976a" opacity="0.5"/>
-    <path d="M70 10 C70 40 40 70 10 70" stroke="#b8976a" stroke-width="0.6" fill="none" opacity="0.4"/>
+  <svg class="corner corner-br" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8 152 L8 8 L152 8" stroke="#c9a96e" stroke-width="1.2" fill="none"/>
+    <path d="M22 136 L22 22 L136 22" stroke="#c9a96e" stroke-width="0.6" fill="none" stroke-dasharray="3 6"/>
+    <circle cx="8" cy="8" r="2.5" fill="#c9a96e"/>
+    <path d="M44 8 Q80 8 80 44" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
+    <path d="M8 44 Q8 80 44 80" stroke="#c9a96e" stroke-width="0.6" fill="none" opacity="0.5"/>
   </svg>
 
   <div class="cover-inner">
     <p class="cover-label">The Wedding of</p>
 
-    <!-- Decorative ring SVG -->
-    <svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-bottom:20px;opacity:0.5">
-      <circle cx="30" cy="30" r="28" stroke="#b8976a" stroke-width="0.8"/>
-      <circle cx="30" cy="30" r="22" stroke="#b8976a" stroke-width="0.4" stroke-dasharray="2 4"/>
-      <path d="M22 30 C22 20 38 20 38 30 C38 40 22 40 22 30" stroke="#b8976a" stroke-width="0.8" fill="none"/>
-      <circle cx="30" cy="30" r="3" fill="#b8976a" opacity="0.4"/>
+    <!-- Ring SVG -->
+    <svg class="ring-svg" width="56" height="56" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="30" cy="30" r="27" stroke="#c9a96e" stroke-width="0.8"/>
+      <circle cx="30" cy="30" r="21" stroke="#c9a96e" stroke-width="0.4" stroke-dasharray="2 4"/>
+      <path d="M22 30 C22 20 38 20 38 30 C38 40 22 40 22 30" stroke="#c9a96e" stroke-width="0.8" fill="none"/>
+      <circle cx="30" cy="30" r="3" fill="#c9a96e" opacity="0.4"/>
     </svg>
 
     <h1 class="cover-title">
       Agung
-      <span class="cover-ampersand">&</span>
+      <span class="cover-amp">&</span>
       Lulu
     </h1>
 
     <div class="divider-line"></div>
-
-    <div class="divider-floral">
-      <span class="floral-icon">✦</span>
-    </div>
+    <div class="floral-row"><span class="floral-icon">✦</span></div>
 
     <p class="cover-to">Kepada Yth.</p>
     <p class="cover-guest-label">Bapak / Ibu / Saudara / i</p>
-    <p class="cover-guest-name">Tamu Undangan</p>
+    <p class="cover-guest-name" id="coverGuestName">Tamu Undangan</p>
 
-    <a href="#invitation" class="btn-open" id="openBtn">
-      <span class="envelope-icon">✉</span>
+    <a href="#" class="btn-open" id="openBtn">
+      <span>✉</span>
       <span>Buka Undangan</span>
     </a>
   </div>
@@ -769,7 +724,8 @@
 
 <!-- ========== INVITATION PAGE ========== -->
 <section id="invitation">
-  <div class="inv-bg-pattern"></div>
+  <div class="inv-noise"></div>
+  <div class="inv-bg-glow"></div>
   <canvas id="particles"></canvas>
 
   <div class="inv-content">
@@ -789,24 +745,22 @@
       </p>
     </div>
 
-    <!-- Couple Names -->
+    <!-- Couple -->
     <div class="couple-section reveal">
       <p class="groom-name">Agung</p>
       <p class="parent-info">Putra dari Bapak .... & Ibu ....</p>
-
       <p class="couple-amp">&</p>
-
       <p class="bride-name">Lulu Ardila</p>
       <p class="parent-info">Putri dari Bapak Wachid & Ibu Amin Fadillah</p>
     </div>
 
-    <!-- Decorative ring motif -->
+    <!-- Ring motif -->
     <div style="text-align:center;margin-bottom:40px;" class="reveal">
       <svg width="100" height="36" viewBox="0 0 100 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <ellipse cx="30" cy="18" rx="28" ry="14" stroke="#b8976a" stroke-width="0.8" opacity="0.5"/>
-        <ellipse cx="70" cy="18" rx="28" ry="14" stroke="#b8976a" stroke-width="0.8" opacity="0.5"/>
-        <ellipse cx="50" cy="18" rx="8" ry="6" fill="#f5f3f0"/>
-        <circle cx="50" cy="18" r="3" fill="#b8976a" opacity="0.4"/>
+        <ellipse cx="30" cy="18" rx="28" ry="14" stroke="#c9a96e" stroke-width="0.8" opacity="0.4"/>
+        <ellipse cx="70" cy="18" rx="28" ry="14" stroke="#c9a96e" stroke-width="0.8" opacity="0.4"/>
+        <ellipse cx="50" cy="18" rx="8" ry="6" fill="#1a1a1e"/>
+        <circle cx="50" cy="18" r="3" fill="#c9a96e" opacity="0.35"/>
       </svg>
     </div>
 
@@ -831,7 +785,7 @@
       </div>
     </div>
 
-    <!-- Quran Quote -->
+    <!-- Quote -->
     <div class="quote-section reveal">
       <div class="sep"><div class="sep-diamond"></div></div>
       <span class="quote-mark">"</span>
@@ -852,11 +806,9 @@
           Kec. Diwek, Kabupaten Jombang,<br>
           Jawa Timur
         </p>
-        <p style="font-family:'Jost',sans-serif;font-weight:300;font-size:0.78rem;color:var(--mid-gray);margin-bottom:20px;">
-          Sabtu, 6 Juni 2026
-        </p>
+        <p class="location-date-sub">Sabtu, 6 Juni 2026</p>
         <a href="https://maps.app.goo.gl/ddCNcAtGeMHBpiBKA" target="_blank" class="btn-maps">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
           Buka Google Maps
         </a>
       </div>
@@ -868,22 +820,20 @@
       <p class="closing-text">
         Merupakan suatu kehormatan dan kebahagiaan bagi kami apabila Bapak / Ibu / Saudara / i berkenan hadir untuk memberikan doa restu kepada putra-putri kami.
       </p>
-      <div class="divider-floral" style="margin-bottom:24px;">
-        <span class="floral-icon" style="color:var(--gold)">✦</span>
+      <div class="floral-row" style="margin-bottom:24px;">
+        <span class="floral-icon">✦</span>
       </div>
       <p class="closing-names">Agung &amp; Lulu Ardila</p>
       <p class="closing-hashtag">#AgungDanLulu2026</p>
 
-      <!-- Decorative floral SVG -->
-      <svg width="160" height="60" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:30px;opacity:0.3">
-        <path d="M80 30 C60 10 20 10 10 30 C20 50 60 50 80 30Z" stroke="#b8976a" stroke-width="0.8" fill="none"/>
-        <path d="M80 30 C100 10 140 10 150 30 C140 50 100 50 80 30Z" stroke="#b8976a" stroke-width="0.8" fill="none"/>
-        <path d="M80 30 C80 10 80 0 80 0 C80 0 80 10 80 30Z" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.5"/>
-        <path d="M80 30 C80 50 80 60 80 60 C80 60 80 50 80 30Z" stroke="#b8976a" stroke-width="0.8" fill="none" opacity="0.5"/>
-        <circle cx="80" cy="30" r="4" stroke="#b8976a" stroke-width="0.8" fill="none"/>
-        <circle cx="80" cy="30" r="1.5" fill="#b8976a" opacity="0.6"/>
-        <circle cx="30" cy="30" r="2" fill="#b8976a" opacity="0.3"/>
-        <circle cx="130" cy="30" r="2" fill="#b8976a" opacity="0.3"/>
+      <!-- Decorative SVG -->
+      <svg width="160" height="60" viewBox="0 0 160 60" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-top:30px;opacity:0.25">
+        <path d="M80 30 C60 10 20 10 10 30 C20 50 60 50 80 30Z" stroke="#c9a96e" stroke-width="0.8" fill="none"/>
+        <path d="M80 30 C100 10 140 10 150 30 C140 50 100 50 80 30Z" stroke="#c9a96e" stroke-width="0.8" fill="none"/>
+        <circle cx="80" cy="30" r="4" stroke="#c9a96e" stroke-width="0.8" fill="none"/>
+        <circle cx="80" cy="30" r="1.5" fill="#c9a96e" opacity="0.5"/>
+        <circle cx="30" cy="30" r="2" fill="#c9a96e" opacity="0.25"/>
+        <circle cx="130" cy="30" r="2" fill="#c9a96e" opacity="0.25"/>
       </svg>
     </div>
 
@@ -896,10 +846,23 @@
 
 </section><!-- /#invitation -->
 
-<!-- Music toggle button -->
+<!-- Music toggle -->
 <button class="music-toggle" id="musicToggle" title="Toggle musik">♪</button>
 
 <script>
+  // ====== READ GUEST NAME FROM URL (?to=NamaTamu) ======
+  (function() {
+    const params = new URLSearchParams(window.location.search);
+    const rawName = params.get('to');
+    const guestEl = document.getElementById('coverGuestName');
+    if (rawName && rawName.trim() !== '') {
+      // Decode & capitalize nicely
+      const decoded = decodeURIComponent(rawName.trim());
+      guestEl.textContent = decoded;
+    }
+    // else keep default "Tamu Undangan"
+  })();
+
   // ====== OPEN INVITATION ======
   document.getElementById('openBtn').addEventListener('click', function(e) {
     e.preventDefault();
@@ -917,21 +880,17 @@
   function startCountdown() {
     const target = new Date('2026-06-06T07:00:00+07:00');
     function update() {
-      const now = new Date();
-      const diff = target - now;
+      const diff = target - new Date();
       if (diff <= 0) {
-        document.getElementById('cd-days').textContent = '00';
-        document.getElementById('cd-hours').textContent = '00';
-        document.getElementById('cd-minutes').textContent = '00';
-        document.getElementById('cd-seconds').textContent = '00';
+        ['cd-days','cd-hours','cd-minutes','cd-seconds'].forEach(id => document.getElementById(id).textContent = '00');
         return;
       }
       const d = Math.floor(diff / 86400000);
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
       const s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
-      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-days').textContent    = String(d).padStart(2,'0');
+      document.getElementById('cd-hours').textContent   = String(h).padStart(2,'0');
       document.getElementById('cd-minutes').textContent = String(m).padStart(2,'0');
       document.getElementById('cd-seconds').textContent = String(s).padStart(2,'0');
     }
@@ -943,18 +902,14 @@
   function initScrollReveal() {
     const els = document.querySelectorAll('.reveal');
     const obs = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-      });
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
     }, { threshold: 0.12 });
     els.forEach(el => obs.observe(el));
-    // Immediately trigger first elements
     setTimeout(() => {
       document.querySelectorAll('.reveal').forEach(el => {
-        const rect = el.getBoundingClientRect();
-        if (rect.top < window.innerHeight) el.classList.add('visible');
+        if (el.getBoundingClientRect().top < window.innerHeight) el.classList.add('visible');
       });
-    }, 100);
+    }, 120);
   }
 
   // ====== FLOATING PETALS ======
@@ -963,19 +918,19 @@
     function spawn() {
       const p = document.createElement('div');
       p.className = 'petal';
-      p.textContent = symbols[Math.floor(Math.random()*symbols.length)];
-      p.style.left = Math.random()*100 + 'vw';
-      p.style.top = '-20px';
-      p.style.color = `rgba(184,151,106,${0.2+Math.random()*0.4})`;
-      p.style.fontSize = (0.5+Math.random()*0.8) + 'rem';
-      const dur = 8+Math.random()*10;
+      p.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+      p.style.left = Math.random() * 100 + 'vw';
+      p.style.top  = '-20px';
+      p.style.color = `rgba(201,169,110,${0.15 + Math.random() * 0.35})`;
+      p.style.fontSize = (0.45 + Math.random() * 0.7) + 'rem';
+      const dur = 9 + Math.random() * 10;
       p.style.animationDuration = dur + 's';
-      p.style.animationDelay = Math.random()*4 + 's';
+      p.style.animationDelay   = Math.random() * 3 + 's';
       document.body.appendChild(p);
-      setTimeout(() => p.remove(), (dur+5)*1000);
+      setTimeout(() => p.remove(), (dur + 5) * 1000);
     }
-    for(let i=0;i<6;i++) spawn();
-    setInterval(spawn, 3000);
+    for (let i = 0; i < 6; i++) spawn();
+    setInterval(spawn, 3500);
   }
 
   // ====== PARTICLE CANVAS ======
@@ -988,36 +943,36 @@
       W = window.innerWidth; H = window.innerHeight;
       canvas.width = W; canvas.height = H;
     });
-    const particles = Array.from({length: 40}, () => ({
-      x: Math.random()*W, y: Math.random()*H,
-      r: 0.5+Math.random()*1.5,
-      dx: (Math.random()-0.5)*0.3,
-      dy: (Math.random()-0.5)*0.3,
-      a: 0.1+Math.random()*0.3
+    const particles = Array.from({ length: 45 }, () => ({
+      x: Math.random() * W, y: Math.random() * H,
+      r: 0.4 + Math.random() * 1.4,
+      dx: (Math.random() - 0.5) * 0.25,
+      dy: (Math.random() - 0.5) * 0.25,
+      a: 0.06 + Math.random() * 0.22
     }));
     function draw() {
-      ctx.clearRect(0,0,W,H);
+      ctx.clearRect(0, 0, W, H);
       particles.forEach(p => {
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
-        ctx.fillStyle = `rgba(184,151,106,${p.a})`;
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201,169,110,${p.a})`;
         ctx.fill();
         p.x += p.dx; p.y += p.dy;
-        if(p.x<0||p.x>W) p.dx*=-1;
-        if(p.y<0||p.y>H) p.dy*=-1;
+        if (p.x < 0 || p.x > W) p.dx *= -1;
+        if (p.y < 0 || p.y > H) p.dy *= -1;
       });
       requestAnimationFrame(draw);
     }
     draw();
   }
 
-  // ====== MUSIC TOGGLE (placeholder) ======
+  // ====== MUSIC TOGGLE ======
   let musicOn = false;
   document.getElementById('musicToggle').addEventListener('click', function() {
     musicOn = !musicOn;
     this.textContent = musicOn ? '♫' : '♪';
     this.style.background = musicOn ? 'var(--gold)' : '';
-    this.style.color = musicOn ? 'var(--white)' : '';
+    this.style.color = musicOn ? 'var(--bg-deep)' : '';
   });
 </script>
 </body>
